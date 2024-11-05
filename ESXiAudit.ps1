@@ -1,7 +1,7 @@
 ###################################################################################
 #
 #    Script:    ESXiAudit.ps1
-#    Version:   1.0
+#    Version:   1.1
 #    Author:    Dan Saunders
 #    Contact:   dcscoder@gmail.com
 #    Purpose:   ESXi Security Configuration Audit Script (PowerShell)
@@ -23,7 +23,7 @@
 ###################################################################################
 
 $Script = "ESXiAudit"
-$Version = "v1.0"
+$Version = "v1.1"
 
 ########## Startup ##########
 
@@ -111,7 +111,7 @@ $LockdownData = (Get-VMHost).$LockdownSetting | Select -ExpandProperty Value -ea
 	if ($LockdownData -Ne $LockdownRecommended) {
 		Write-Output "Information: Lockdown mode is set to 'lockdownEnabled'. Lockdown mode is enabled." >> $Destination\$Audit\$Report}
 	elseif ($LockdownData -Eq $LockdownRecommended) { 
-		Write-Output "Finding: Lockdown mode is set to 'lockdownDisabled'. Lockdown mode is disabled. `nBackground: Threat actors may attempt to execute binaries not part of an authorised signed vSphere Installation Bundle (VIB). `nRecommendation: Set the configuration to '$LockdownRecommended', to ensure lockdown mode is enabled." >> $Destination\$Audit\$Report}
+		Write-Output "Finding: Lockdown mode is set to 'lockdownDisabled'. Lockdown mode is disabled. `nBackground: Threat actors may attempt to leverage services using privileged users to execute nefarious tasks. Lockdown mode forces the use of vCenter, unless user is exempt on exceptions list. `nRecommendation: Set the configuration to '$LockdownRecommended', to ensure lockdown mode is enabled." >> $Destination\$Audit\$Report}
 
 # Suppress Shell Warning
 Write-Output "`r`nCheck: Suppress Shell Warning" >> $Destination\$Audit\$Report
