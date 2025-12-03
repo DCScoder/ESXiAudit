@@ -1,7 +1,7 @@
 ###################################################################################
 #
 #    Script:    ESXiAudit.ps1
-#    Version:   1.1
+#    Version:   1.2
 #    Author:    Dan Saunders
 #    Contact:   dcscoder@gmail.com
 #    Purpose:   ESXi Security Configuration Audit Script (PowerShell)
@@ -23,7 +23,7 @@
 ###################################################################################
 
 $Script = "ESXiAudit"
-$Version = "v1.1"
+$Version = "v1.2"
 
 ########## Startup ##########
 
@@ -106,7 +106,7 @@ $ExecData = (Get-VMHost | Get-AdvancedSetting -Name $ExecSetting | Select -Expan
 # Lockdown Mode
 Write-Output "`r`nCheck: Lockdown Mode" >> $Destination\$Audit\$Report
 $LockdownSetting = ".ExtensionData.Config.LockdownMode"
-$LockdownRecommended = "lockdownDisabled"
+$LockdownRecommended = "lockdownEnabled"
 $LockdownData = (Get-VMHost).$LockdownSetting | Select -ExpandProperty Value -ea SilentlyContinue
 	if ($LockdownData -Ne $LockdownRecommended) {
 		Write-Output "Information: Lockdown mode is set to 'lockdownEnabled'. Lockdown mode is enabled." >> $Destination\$Audit\$Report}
@@ -259,3 +259,4 @@ Get-ChildItem -Path "$Destination\$Audit\\*" -Recurse | Remove-Item -Force -Recu
 Remove-Item "$Destination\$Audit"
 
 Write-Host "`nScript completed!" -ForegroundColor green -BackgroundColor black
+
